@@ -1,6 +1,6 @@
 # Rust Portable SIMD "Hello World" Example
 
-This is a basic example on how to get started with [Rust's standard library portable SIMD API](https://github.com/rust-lang/stdsimd).
+This is a basic example of how to get started with [Rust's standard library portable SIMD API](https://github.com/rust-lang/stdsimd).
 
 Currently, this is tested for the following targets:
 * `x86_64-pc-windows-msvc`
