@@ -100,7 +100,7 @@ jobs:
         with:
           name: Linux64
           path: |
-            target/**/*.*
+            target/debug/rust-portable-simd-hello-world
 
   Win64-cross-compiled:
     name: Windows x64 (cross-compiled)
