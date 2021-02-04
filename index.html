@@ -6,12 +6,19 @@
   <body>
     <!-- Note the usage of `type=module` here as this is an ES6 module -->
     <script type="module">
-      const rust = import('./pkg/wasm.js');
+      const rust = import(('./wasm.js'));
 
       rust.then(m => {
         const init = m.default;
-        init('./pkg/wasm_bg.wasm');
-      }).catch(console.error);
+        init('./wasm_bg.wasm');
+      }).catch(e => {
+        const rust = import('./pkg/wasm.js');
+
+        rust.then(m => {
+          const init = m.default;
+          init('./pkg/wasm_bg.wasm');
+        }).catch(console.error);
+      });
     </script>
   </body>
 </html>
