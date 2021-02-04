@@ -51,7 +51,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --target x86_64-pc-windows-msvc --debug
+          args: --target x86_64-pc-windows-msvc
 
       - name: Upload Win64 build result
         uses: actions/upload-artifact@v2
@@ -81,7 +81,7 @@ jobs:
           use-cross: true
           command: build
           ## keep in mind that the cross-compiled windows-gnu binary is bigger and slower compared to the msvc toolchain
-          args: --target x86_64-pc-windows-gnu --debug
+          args: --target x86_64-pc-windows-gnu
 
       - name: Upload Win64 build result
         uses: actions/upload-artifact@v2
