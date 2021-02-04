@@ -1,0 +1,91 @@
+name: SIMD Hello World
+
+on: [push, pull_request]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  WebAssembly:
+    name: WebAssembly
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install wasm-pack
+        uses: jetli/wasm-pack-action@v0.3.0
+        with:
+          # Optional version of wasm-pack to install(eg. 'v0.9.1', 'latest')
+          version: 'latest'
+
+      - name: Build target
+        run: wasm-pack build . --target web --debug
+
+      - name: Copy index.html
+        run: cp index.html ./pkg/
+
+      - name: Upload WebAssembly build result
+        uses: actions/upload-artifact@v2
+        with:
+          name: WebAssembly
+          path: |
+            pkg/wasm*.*
+            pkg/index.html
+
+  Win64:
+    name: Windows x64
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: x86_64-pc-windows-msvc
+          override: true
+
+      - name: Build target
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --target x86_64-pc-windows-msvc --debug
+
+      - name: Upload Win64 build result
+        uses: actions/upload-artifact@v2
+        with:
+          name: Win64
+          path: |
+            target/debug/x86_64-pc-windows-msvc/rust-portable-simd-hello-world.exe
+
+
+  Win64-cross-compiled:
+    name: Windows x64 (cross-compiled)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: x86_64-pc-windows-gnu
+          override: true
+
+      - name: Build target
+        uses: actions-rs/cargo@v1
+        with:
+          use-cross: true
+          command: build
+          ## keep in mind that the cross-compiled windows-gnu binary is bigger and slower compared to the msvc toolchain
+          args: --target x86_64-pc-windows-gnu --debug
+
+      - name: Upload Win64 build result
+        uses: actions/upload-artifact@v2
+        with:
+          name: Win64-cross-compiled
+          path: |
+            target/x86_64-pc-windows-gnu/debug/rust-portable-simd-hello-world.exe
