@@ -102,6 +102,37 @@ jobs:
           path: |
             target/debug/rust-portable-simd-hello-world
 
+  MacOS64:
+    name: MacOS x64
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
+
+      - name: Build target
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+
+      - name: Run
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+
+      - name: Upload MacOS build result
+        uses: actions/upload-artifact@v2
+        with:
+          name: MacOS
+          path: |
+            target/debug/rust-portable-simd-hello-world
+
+
   Win64-cross-compiled:
     name: Windows x64 (cross-compiled)
     runs-on: ubuntu-latest
