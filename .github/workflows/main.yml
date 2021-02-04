@@ -60,12 +60,17 @@ jobs:
           command: build
           args: --target x86_64-pc-windows-msvc
 
+      - name: Run
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+
       - name: Upload Win64 build result
         uses: actions/upload-artifact@v2
         with:
           name: Win64
           path: |
-            target/debug/x86_64-pc-windows-msvc/rust-portable-simd-hello-world.exe
+            target/x86_64-pc-windows-msvc/debug/*.exe
 
 
   Win64-cross-compiled:
@@ -95,4 +100,4 @@ jobs:
         with:
           name: Win64-cross-compiled
           path: |
-            target/x86_64-pc-windows-gnu/debug/rust-portable-simd-hello-world.exe
+            target/x86_64-pc-windows-gnu/debug/*.exe
