@@ -1,3 +1,5 @@
+![SIMD Hello World](https://github.com/haraldreingruber-dedalus/rust-protable-simd-hello-world/workflows/SIMD%20Hello%20World/badge.svg)
+
 # Rust Portable SIMD "Hello World" Example
 
 This is a basic example of how to get started with [Rust's standard library portable SIMD API](https://github.com/rust-lang/stdsimd).
