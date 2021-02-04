@@ -72,6 +72,35 @@ jobs:
           path: |
             target/x86_64-pc-windows-msvc/debug/*.exe
 
+  Linux64:
+    name: Linux x64
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
+
+      - name: Build target
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+
+      - name: Run
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+
+      - name: Upload Linux64 build result
+        uses: actions/upload-artifact@v2
+        with:
+          name: Linux64
+          path: |
+            target/**/*.*
 
   Win64-cross-compiled:
     name: Windows x64 (cross-compiled)
